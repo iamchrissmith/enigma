@@ -9,14 +9,14 @@ class KeyGeneratorTest < MiniTest::Test
     attr_reader :key
 
     def setup
-        @key = KeyGenerator.new 
+        @key = KeyGenerator.new
     end
 
     def test_key_generator_exists
         assert key
         assert_instance_of KeyGenerator, key
     end
-    
+
     def test_key_generates_key_of_five_characters
         new_key = key.generate
         assert new_key
@@ -32,5 +32,14 @@ class KeyGeneratorTest < MiniTest::Test
             assert valid.include?(char)
         end
     end
-end
 
+    def test_get_random_is_string
+      x = key.get_random
+      assert_instance_of String, x
+    end
+
+    def test_generate_returns_string
+      x = key.generate
+      assert_instance_of String, x
+    end
+end
