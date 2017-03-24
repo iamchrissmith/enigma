@@ -35,8 +35,7 @@ class OffsetCalculatorTest < MiniTest::Test
 
   def test_offset_accepts_date_returns_offset
     today = Date.new(2017,2,23).strftime("%d%m%y")
-    today = today.to_i ** 2
-    expect = today.to_s[-4..-1]
+    expect = '7089'
     assert_equal expect, offset_date.get_offset
     assert_instance_of String, offset_date.get_offset
     assert_equal 4, offset_date.get_offset.length
