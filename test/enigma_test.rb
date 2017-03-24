@@ -19,11 +19,11 @@ class EnigmaTest < MiniTest::Test
 
   def test_encryptor_encrypts_our_names
     chris = e.encrypt("chris","12345",Date.new(2017,2,23))
-    c_output = "vgjkn"
+    c_output = "vehkl"
     assert_equal c_output, chris
-    # natalia = e.encrypt("natalia","12345",Date.new(2017,2,23))
-    # n_output = ""
-    # assert_equal n_output, natalia
+    natalia = e.encrypt("natalia","12345",Date.new(2017,2,23))
+    n_output = "gxjcefq"
+    assert_equal n_output, natalia
   end
 
 end

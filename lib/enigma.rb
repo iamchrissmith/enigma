@@ -17,10 +17,10 @@ class Enigma
     letters = message.split('')
     secret = letters.map do |letter|
       index = @alpha.index(letter)
-      this_shift = shift[0] % 26
-      rotated = @alpha.rotate( this_shift + index )
+      this_shift = shift[0]
+      rotated = @alpha.rotate( this_shift )
       shift.rotate!
-      rotated[0]
+      rotated[index]
     end
     secret.join('')
   end
