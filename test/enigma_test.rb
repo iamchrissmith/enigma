@@ -59,10 +59,10 @@ class EnigmaTest < MiniTest::Test
 
   def test_cracker_returns_names
     natalia = e.crack("6xC\"45*wIM]IwMf",Date.new(2017,2,23))
-    n_output = "natalia"
+    n_output = "natalia ..end.."
     assert_equal n_output, natalia
-    chris = e.decrypt("v4AD@Rfrx![rI",Date.new(2017,2,23))
-    c_output = "chris"
+    chris = e.crack("v4AD@Rfrx![rI",Date.new(2017,2,23))
+    c_output = "chris ..end.."
     assert_equal c_output, chris
   end
 

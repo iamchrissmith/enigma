@@ -14,6 +14,19 @@ class Encryptor
       end
   end
 
+  def discover_shift(coded_tail, tail)
+    coded_tail.map.with_index do |code, idx|
+      coded_index = @alpha.index(code) 
+      rotated = @alpha.rotate(coded_index)
+      counter = 0
+      until rotated[0] == tail[idx]
+        rotated = rotated.rotate(-1)
+        counter += 1
+      end
+      counter #- alpha.index(tail[idx])
+    end
+  end
+
   private
 
   def upper_alpha

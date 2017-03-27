@@ -24,16 +24,17 @@ class Enigma
   end
 
   def crack(secret, date = Date.today)
-    # last 7 characters = "..end.."
-    # recreate the shift array
-    # moving like decrypt (minus)
-    # look at the last char of secret
-    # - find the shift for that to equal "."
-    # - - that gives this_shift+index for one shift value
-    # look at the second to last char of secret
-    # - find the shift for that to equal "."
-    # - - that gives this_shift+index for one shift value
-    # keep repeating until look at all "..end.." chars or filled in the entire shift array
+    
+    start, finish = find_end_adjustment(secret) 
+    coded_tail = secret[start..finish].split("")
+    tail = "..end.."[start..finish].split("")
+    shift = @encryptor.discover_shift(coded_tail, tail)
+    shift = negative_shift(shift)
+    letters = secret.split('')
+    @encryptor.rotate_letters(letters, shift).join('')
+
+    # - - that gives this_shift+index for one shift value (no negatives)
+
   end
 
   private 
@@ -42,11 +43,11 @@ class Enigma
     shift = shift.map {|number| -number}
   end
 
-  def adjust_end_for_shift(secret)
+  def find_end_adjustment(secret)
     place = secret.length % 4
     start = -4 - place
     finish = -1 - place
-    secret[start..finish].split("")
+    [start, finish]
   end
   
 end
