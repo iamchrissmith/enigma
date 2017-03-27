@@ -2,21 +2,22 @@ require 'pry'
 
 class OffsetCalculator
 
-  attr_reader :key
-  attr_accessor :date
+  # attr_reader :key
+  # attr_accessor :date
 
-  def initialize(key, date = Date.today)
-    @key  = key
-    @date = date
-  end
+  # def initialize
+  #   # @key  = key
+  #   # @date = date
+  # end
 
-  def get_offset
+  def get_offset(date)
     today = date.strftime("%d%m%y")
     today = today.to_i ** 2
-    today.to_s[-4..-1]
+    offset = today.to_s[-4..-1]
+    offset.split('').map! {|s| s.to_i }
   end
 
-  def assign_rotators
+  def assign_rotators(key)
     keys = key.split('')
     rotators = []
 
@@ -32,11 +33,10 @@ class OffsetCalculator
     end
   end
 
-  def shift
+  def shift(key, date = Date.today)
     shifted = []
-    rotators = rotators_to_nums( assign_rotators )
-    offset = get_offset
-    offset = offset.split('').map! {|s| s.to_i }
+    rotators = rotators_to_nums( assign_rotators(key) )
+    offset = get_offset(date)
     shifted = [rotators,offset].transpose.map {|x| x.reduce(:+)}
   end
 
