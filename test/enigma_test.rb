@@ -1,8 +1,4 @@
-require 'simplecov'
-SimpleCov.start
-
-require 'minitest/autorun'
-require 'minitest/pride'
+require './test/test_helper'
 require './lib/enigma.rb'
 
 class EnigmaTest < MiniTest::Test
@@ -19,7 +15,7 @@ class EnigmaTest < MiniTest::Test
 
   def test_encryptor_encrypts_our_names
     chris = e.encrypt("chris ..end..","12345",Date.new(2017,2,23))
-    c_output = "v4BE@Whtx!)tK"
+    c_output = "v4BE@Whtx!)t"
     assert_equal c_output, chris
     natalia = e.encrypt("natalia ..end..","12345",Date.new(2017,2,23))
     n_output = "6xD/45&1KO[JwOh"

@@ -5,11 +5,7 @@ require './lib/offset_calculator'
 class Enigma
 
   def initialize
-    @alpha = ('A'..'Z').to_a
-              + ('a'..'z').to_a
-              + ("0".."9").to_a
-              + %w(! @ # $ % ^ & * ( ) [ ] , . < > ; : / ? |)
-              + [" "]
+    @alpha = ('A'..'Z').to_a + ('a'..'z').to_a + ("0".."9").to_a + %w(! @ # $ % ^ & * ( ) [ ] , . < > ; : / ? |) + [" "]
   end
   # should have crypt class with encrypt and decrypt.
   # use these as runners

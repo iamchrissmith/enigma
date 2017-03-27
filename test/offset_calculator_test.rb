@@ -1,8 +1,4 @@
-require 'simplecov'
-SimpleCov.start
-
-require 'minitest/autorun'
-require 'minitest/pride'
+require './test/test_helper'
 require './lib/offset_calculator'
 
 class OffsetCalculatorTest < MiniTest::Test
