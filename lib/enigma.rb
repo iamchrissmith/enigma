@@ -1,52 +1,26 @@
 require 'pry'
 require './lib/key_generator'
 require './lib/offset_calculator'
+require './lib/encryptor'
 
 class Enigma
 
   def initialize
-    @alpha = upper_alpha + lower_alpha + numbers + symbols
+    @encryptor = Encryptor.new
   end
-  # should have crypt class with encrypt and decrypt.
-  # use these as runners
-  def encrypt(message, key = nil, date = Date.today)
-    key_gen = KeyGenerator.new
-    key = key_gen.generate if !key
+  
+  def encrypt(message, key = KeyGenerator.new.generate, date = Date.today)
     offset = OffsetCalculator.new(key, date)
     shift = offset.shift
     letters = message.split('')
-    #move to separate method this will allow using the same method for encrypt/decrypt
-    secret = letters.map do |letter|
-      index = @alpha.index(letter)
-      this_shift = shift[0]
-      rotated = @alpha.rotate( this_shift )
-      shift.rotate!
-      rotated[index]
-    end
-    secret.join('')
+    @encryptor.rotate_letters(letters, shift).join('')
   end
 
   def decrypt(secret, key, date = Date.today)
-    key_gen = KeyGenerator.new
-    key = key_gen.generate if !key
     offset = OffsetCalculator.new(key, date)
-    shift = offset.shift
-    # make shifts negative then pass to method from encrypt
+    shift = negative_shift(offset.shift)
     letters = secret.split('')
-    message = letters.map do |letter|
-      index = @alpha.index(letter)
-      this_shift = shift[0]
-      rotated = @alpha.rotate( -this_shift )
-      shift.rotate!
-      rotated[index]
-    end
-    message.join('')
-  end
-
-  def adjust_end_for_shift(secret)
-    # shift array is four numbers
-    # length of secret % 4 = place in rotation of shift
-    # - move left by the remainder of secret.length % 4 then take the previous four of "..end.."
+    @encryptor.rotate_letters(letters, shift).join('')
   end
 
   def crack(secret, date = Date.today)
@@ -62,24 +36,17 @@ class Enigma
     # keep repeating until look at all "..end.." chars or filled in the entire shift array
   end
 
-  private
+  private 
 
-  def upper_alpha
-    ('A'..'Z').to_a
+  def negative_shift(shift)
+    shift = shift.map {|number| -number}
   end
 
-  def lower_alpha
-    ('a'..'z').to_a
+  def adjust_end_for_shift(secret)
+    place = secret.length % 4
+    start = -4 - place
+    finish = -1 - place
+    secret[start..finish].split("")
   end
-
-  def numbers
-    ("0".."9").to_a
-  end
-
-  def symbols
-    symbols = %w(! @ $ % ^ & * ( ) [ ] , . < > ; :)
-    symbols << [" ", "\"", "/", "?", "|", "#"]
-    symbols.flatten
-  end
-
+  
 end

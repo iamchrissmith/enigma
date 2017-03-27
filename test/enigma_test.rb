@@ -52,12 +52,12 @@ class EnigmaTest < MiniTest::Test
     assert_equal n_output, second
   end
 
-  def test_adjust_end_for_shift_returns_right_negative_number
-    e.adjust_end_for_shift("v4AD@Rfrx![rI")
-  end
+  # def test_adjust_end_for_shift_returns_right_negative_number
+  #   output = e.adjust_end_for_shift("v4AD@Rfrx![rI")
+  #   assert_equal ["x", "!", "[", "r"], output
+  # end
 
   def test_cracker_returns_names
-    skip
     natalia = e.crack("6xC\"45*wIM]IwMf",Date.new(2017,2,23))
     n_output = "natalia"
     assert_equal n_output, natalia
