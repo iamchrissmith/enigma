@@ -5,11 +5,7 @@ require './lib/offset_calculator'
 class Enigma
 
   def initialize
-    @alpha = ('A'..'Z').to_a
-              + ('a'..'z').to_a
-              + ("0".."9").to_a
-              + %w(! @ # $ % ^ & * ( ) [ ] , . < > ; : / ? |)
-              + [" "]
+    @alpha = upper_alpha + lower_alpha + numbers + symbols
   end
   # should have crypt class with encrypt and decrypt.
   # use these as runners
@@ -66,4 +62,24 @@ class Enigma
     # keep repeating until look at all "..end.." chars or filled in the entire shift array
   end
 
+  private
+
+  def upper_alpha
+    ('A'..'Z').to_a
+  end
+  
+  def lower_alpha
+    ('a'..'z').to_a
+  end
+  
+  def numbers
+    ("0".."9").to_a
+  end
+  
+  def symbols
+    symbols = %w(! @ $ % ^ & * ( ) [ ] , . < > ; :)
+    symbols << [" ", "\"", "/", "?", "|", "#"]
+    symbols.flatten
+  end
+  
 end
