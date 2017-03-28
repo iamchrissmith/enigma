@@ -14,25 +14,6 @@ class CrackTest < MiniTest::Test
     assert_instance_of Crack, e
   end
 
-  # def test_if_discovers_shift_easy
-  #   expected = [1, 2, 3, 4]
-  #   output = @e.discover_shift(["b", "d", "f", "h"],["a","b","c","d"])
-  #
-  #   assert_equal expected, output
-  # end
-  #
-  # def test_if_discovers_shift_spicy
-  #   expected = [19,23,42,54]
-  #   output = @e.discover_shift(["x","!","[","r"],["e","n","d","."])
-  #
-  #   assert_equal expected, output
-  # end
-
-  # def test_adjust_end_for_shift_returns_right_negative_number
-  #   output = e.adjust_end_for_shift("v4AD@Rfrx![rI")
-  #   assert_equal ["x", "!", "[", "r"], output
-  # end
-
   def test_cracker_returns_names
     natalia = e.run("6xC\"45*wIM]IwMf",Date.new(2017,2,23))
     n_output = "natalia ..end.."
@@ -43,7 +24,6 @@ class CrackTest < MiniTest::Test
   end
 
   def test_crack_writes_decoded_message_to_file
-    # skip
     within_construct do |construct|
       construct.directory 'test/mock_files' do |dir|
         dir.file 'encrypted.txt', "v4AD@Rfrx![rI"
@@ -56,7 +36,6 @@ class CrackTest < MiniTest::Test
   end
 
   def test_crack_writes_decoded_message_to_file_when_message_has_line_breaks
-    # skip
     within_construct do |construct|
       construct.directory 'test/mock_files' do |dir|
         dir.file 'encrypted.txt', "v4AD@Rfrx![rI\n\n"
@@ -67,5 +46,25 @@ class CrackTest < MiniTest::Test
       end
     end
   end
+
+  # COMMENTING OUT PRIVATE FUNCTION TESTS
+    # def test_if_discovers_shift_easy
+    #   expected = [1, 2, 3, 4]
+    #   output = @e.discover_shift(["b", "d", "f", "h"],["a","b","c","d"])
+    #
+    #   assert_equal expected, output
+    # end
+    #
+    # def test_if_discovers_shift_spicy
+    #   expected = [19,23,42,54]
+    #   output = @e.discover_shift(["x","!","[","r"],["e","n","d","."])
+    #
+    #   assert_equal expected, output
+    # end
+
+    # def test_adjust_end_for_shift_returns_right_negative_number
+    #   output = e.adjust_end_for_shift("v4AD@Rfrx![rI")
+    #   assert_equal ["x", "!", "[", "r"], output
+    # end
 
 end

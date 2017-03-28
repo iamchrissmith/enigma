@@ -8,10 +8,6 @@ require './lib/crack'
 
 class Enigma
 
-  def initialize
-    # @offset = OffsetCalculator.new
-  end
-
   def encrypt(message, key = KeyGenerator.new.generate, date = Date.today)
       encrypt = Encrypt.new()
       encrypt.run(message, key, date)

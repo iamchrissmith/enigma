@@ -6,10 +6,7 @@ require './lib/decrypt'
 
 class Crack
 
-  def initialize #(args)
-    # @enigma = Enigma.new
-    # @args = args
-    # file_crack
+  def initialize
     @offset = OffsetCalculator.new
     @encryptor = Encryptor.new
     @decrypt = Decrypt.new
