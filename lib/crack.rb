@@ -1,30 +1,59 @@
 require 'pry'
 require './lib/key_generator'
-require './lib/enigma'
+require './lib/offset_calculator'
+require './lib/encryptor'
+require './lib/decrypt'
 
 class Crack
-  
-  def initialize(args)
-    @enigma = Enigma.new
-    @args = args
-    file_crack
+
+  def initialize #(args)
+    # @enigma = Enigma.new
+    # @args = args
+    # file_crack
+    @offset = OffsetCalculator.new
+    @encryptor = Encryptor.new
+    @decrypt = Decrypt.new
+    @found_key = ''
   end
 
-  def file_crack
-    secret = File.read(@args[0])
-    date = parse_date(@args[2])
-    message = @enigma.crack(secret, date)
-    File.write(@args[1], message)
-    puts "Created '#{@args[1]}' with the key and date #{@args[2]}"
+  def run(secret, date)
+    start, finish = find_end_adjustment(secret)
+    coded_tail = secret[start..finish].split("")
+    tail = "..end.."[start..finish].split("")
+    shift = @encryptor.discover_shift(coded_tail, tail)
+    offset = @offset.get_offset(date)
+    rotators = [shift,offset].transpose.map {|x| x.reduce(:-)}
+    @found_key = reverse_to_key(rotators)
+    @decrypt.run(secret, @found_key, date)
   end
 
-  def parse_date(text)
-    day = text[0..1].to_i
-    month = text[2..3].to_i
-    year = ("20" + text[4..5]).to_i
-    Date.new(year,month,day)
+  def file_crack(args)
+    args = args.insert(2,'') #putting in fake key to normalize args
+    file_args = @encryptor.parse_file_args(args)
+    secret = @encryptor.get_file_message(file_args[:input])
+    message = run(secret, file_args[:date])
+    @encryptor.write_file(file_args[:output], message)
+    @encryptor.success_message(file_args[:output], @found_key, file_args[:date])
   end
-  
+
+  private
+  def find_end_adjustment(secret)
+    place = secret.length % 4
+    start = -4 - place
+    finish = -1 - place
+    [start, finish]
+  end
+
+  def reverse_to_key(rotators)
+    key = rotators.map {|number| number.to_s[0]}
+    key << rotators.last.to_s[1]
+    key.join("")
+  end
+
+
 end
 
-Crack.new(ARGV)
+if !ARGV.empty?
+  Crack.new(ARGV)
+  crack.file_crack(ARGV)
+end

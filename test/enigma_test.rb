@@ -13,7 +13,7 @@ class EnigmaTest < MiniTest::Test
     assert_instance_of Enigma, e
   end
 
-  def test_encryptor_encrypts_our_names
+  def test_enigma_runs_encrypt_on_our_names
     chris = e.encrypt("chris ..end..","12345",Date.new(2017,2,23))
     c_output = "v4AD@Rfrx![rI"
     assert_equal c_output, chris
@@ -22,28 +22,7 @@ class EnigmaTest < MiniTest::Test
     assert_equal n_output, natalia
   end
 
-  def test_encryptor_encrypts_long_with_special_characters
-    first = e.encrypt("a A adslfkjlkjfadsLKJLK: !@ ..end..","12345",Date.new(2017,2,23))
-    c_output = "tRqwt0BGy7;G36,\"w&1$ci0vNAUwIM]IwMf"
-    assert_equal c_output, first
-    second = e.encrypt("! @ # $ % ^ & * ( ) [ ] , . < > ; : / ? | ..end..","12345",Date.new(2017,2,23))
-    n_output = "/RUwSRVw#RXwBRZwDRbwFRdwHRfwJRhwLRjwPRnwRRfrx![rI"
-    assert_equal n_output, second
-  end
-
-  def test_decryptor_returns_natalia
-    natalia = e.decrypt("6xC\"45*wIM]IwMf","12345",Date.new(2017,2,23))
-    n_output = "natalia ..end.."
-    assert_equal n_output, natalia
-  end
-
-  def test_decryptor_returns_chris
-    chris = e.decrypt("v4AD@Rfrx![rI","12345",Date.new(2017,2,23))
-    c_output = "chris ..end.."
-    assert_equal c_output, chris
-  end
-
-  def test_decryptor_decrypts_long_with_special_characters
+  def test_enigma_runs_decrypt_on_long_with_special_characters
     first = e.decrypt("tRqwt0BGy7;G36,\"w&1$ci0vNAUwIM]IwMf","12345",Date.new(2017,2,23))
     c_output = "a A adslfkjlkjfadsLKJLK: !@ ..end.."
     assert_equal c_output, first
@@ -52,12 +31,7 @@ class EnigmaTest < MiniTest::Test
     assert_equal n_output, second
   end
 
-  # def test_adjust_end_for_shift_returns_right_negative_number
-  #   output = e.adjust_end_for_shift("v4AD@Rfrx![rI")
-  #   assert_equal ["x", "!", "[", "r"], output
-  # end
-
-  def test_cracker_returns_names
+  def test_enigma_runs_crack_and_returns_names
     natalia = e.crack("6xC\"45*wIM]IwMf",Date.new(2017,2,23))
     n_output = "natalia ..end.."
     assert_equal n_output, natalia
