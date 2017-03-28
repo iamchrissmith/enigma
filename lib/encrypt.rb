@@ -4,20 +4,20 @@ require './lib/offset_calculator'
 require './lib/encryptor'
 
 class Encrypt
+  include Encryptor
 
   def initialize
     @offset = OffsetCalculator.new
-    @encryptor = Encryptor.new
   end
 
   def run(message, key, date)
     shift = @offset.shift(key, date)
     letters = message.split('')
-    @encryptor.rotate_letters(letters, shift).join('')
+    rotate_letters(letters, shift).join('')
   end
 
   def file_encrypt(args)
-    @encryptor.file_change(args,self)
+    file_change(args)
   end
 
 end

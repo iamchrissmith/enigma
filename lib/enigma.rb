@@ -1,7 +1,6 @@
 require 'pry'
 require './lib/key_generator'
 require './lib/offset_calculator'
-require './lib/encryptor'
 require './lib/encrypt'
 require './lib/decrypt'
 require './lib/crack'

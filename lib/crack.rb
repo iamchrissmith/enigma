@@ -5,10 +5,10 @@ require './lib/encryptor'
 require './lib/decrypt'
 
 class Crack
+  include Encryptor
 
   def initialize
     @offset = OffsetCalculator.new
-    @encryptor = Encryptor.new
     @decrypt = Decrypt.new
     @found_key = ''
   end
@@ -23,11 +23,11 @@ class Crack
 
   def file_crack(args)
     args = args.insert(2,'') #putting in fake key to normalize args
-    file_args = @encryptor.parse_file_args(args)
-    secret = @encryptor.get_file_message(file_args[:input])
+    file_args = parse_file_args(args)
+    secret = get_file_message(file_args[:input])
     message = run(secret, file_args[:date])
-    @encryptor.write_file(file_args[:output], message)
-    @encryptor.success_message(file_args[:output], @found_key, file_args[:date])
+    write_file(file_args[:output], message)
+    success_message(file_args[:output], @found_key, file_args[:date])
   end
 
   private
@@ -57,8 +57,8 @@ class Crack
 
   def discover_shift(coded_tail, tail)
     coded_tail.map.with_index do |code, idx|
-      coded_index = @encryptor.alpha.index(code)
-      rotated = @encryptor.alpha.rotate(coded_index)
+      coded_index = ALPHA.index(code)
+      rotated = ALPHA.rotate(coded_index)
       counter = 0
       until rotated[0] == tail[idx]
         rotated = rotated.rotate(-1)

@@ -1,25 +1,40 @@
-require 'pry'
-class Encryptor
-  attr_reader :alpha
+module Encryptor
+  module_function
 
-  def initialize
-    @alpha = upper_alpha + lower_alpha + numbers + symbols
+  def upper_alpha
+    ('A'..'Z').to_a
   end
+
+  def lower_alpha
+    ('a'..'z').to_a
+  end
+
+  def numbers
+    ("0".."9").to_a
+  end
+
+  def symbols
+    symbols = %w(! @ $ % ^ & * ( ) [ ] , . < > ; :)
+    symbols << [" ", "\"", "/", "?", "|", "#"]
+    symbols.flatten
+  end
+
+  ALPHA = upper_alpha + lower_alpha + numbers + symbols
 
   def rotate_letters(letters, shift)
     letters.map do |letter|
-        index = @alpha.index(letter)
+        index = ALPHA.index(letter)
         this_shift = shift[0]
-        rotated = @alpha.rotate( this_shift )
+        rotated = ALPHA.rotate( this_shift )
         shift.rotate!
         rotated[index]
       end
   end
 
-  def file_change(args,action)
+  def file_change(args)
     file_args = parse_file_args(args)
     secret = get_file_message(file_args[:input])
-    message = action.run(secret, file_args[:key], file_args[:date])
+    message = run(secret, file_args[:key], file_args[:date])
     write_file(file_args[:output], message)
     success_message(file_args[:output], file_args[:key], file_args[:date])
   end
@@ -54,24 +69,5 @@ class Encryptor
   def success_message(output_file, key, date)
     date = date.strftime("%d%m%y")
     "Created '#{output_file}' with the key #{key} and date #{date}"
-  end
-
-  private
-  def upper_alpha
-    ('A'..'Z').to_a
-  end
-
-  def lower_alpha
-    ('a'..'z').to_a
-  end
-
-  def numbers
-    ("0".."9").to_a
-  end
-
-  def symbols
-    symbols = %w(! @ $ % ^ & * ( ) [ ] , . < > ; :)
-    symbols << [" ", "\"", "/", "?", "|", "#"]
-    symbols.flatten
   end
 end
