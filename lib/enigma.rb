@@ -23,7 +23,7 @@ class Enigma
   end
 
   def crack(secret, date = Date.today)
-    start, finish = find_end_adjustment(secret) 
+    start, finish = find_end_adjustment(secret)
     coded_tail = secret[start..finish].split("")
     tail = "..end.."[start..finish].split("")
     shift = @encryptor.discover_shift(coded_tail, tail)
@@ -33,7 +33,7 @@ class Enigma
     decrypt(secret, key, date)
   end
 
-  private 
+  private
 
   def negative_shift(shift)
     shift = shift.map {|number| -number}
@@ -45,11 +45,11 @@ class Enigma
     finish = -1 - place
     [start, finish]
   end
-  
+
   def reverse_to_key(rotators)
     key = rotators.map {|number| number.to_s[0]}
     key << rotators.last.to_s[1]
     key.join("")
   end
-  
+
 end
