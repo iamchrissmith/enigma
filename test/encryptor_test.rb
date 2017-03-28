@@ -24,19 +24,4 @@ class EncryptorTest < MiniTest::Test
 
     assert_equal expected, output
   end
-
-  def test_if_discovers_shift_easy
-    expected = [1, 2, 3, 4]
-    output = encryptor.discover_shift(["b", "d", "f", "h"],["a","b","c","d"])
-
-    assert_equal expected, output
-  end
-
-  def test_if_discovers_shift_spicy
-    expected = [19,23,42,54]
-    output = encryptor.discover_shift(["x","!","[","r"],["e","n","d","."])
-
-    assert_equal expected, output
-  end
-
 end

@@ -1,5 +1,6 @@
 require 'pry'
 class Encryptor
+  attr_reader :alpha
 
   def initialize
     @alpha = upper_alpha + lower_alpha + numbers + symbols
@@ -13,19 +14,6 @@ class Encryptor
         shift.rotate!
         rotated[index]
       end
-  end
-
-  def discover_shift(coded_tail, tail)
-    coded_tail.map.with_index do |code, idx|
-      coded_index = @alpha.index(code)
-      rotated = @alpha.rotate(coded_index)
-      counter = 0
-      until rotated[0] == tail[idx]
-        rotated = rotated.rotate(-1)
-        counter += 1
-      end
-      counter
-    end
   end
 
   def file_change(args,action)

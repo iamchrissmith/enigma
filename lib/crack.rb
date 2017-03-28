@@ -18,12 +18,9 @@ class Crack
 
   def run(secret, date)
     start, finish = find_end_adjustment(secret)
-    coded_tail = secret[start..finish].split("")
-    tail = "..end.."[start..finish].split("")
-    shift = @encryptor.discover_shift(coded_tail, tail)
-    offset = @offset.get_offset(date)
-    rotators = [shift,offset].transpose.map {|x| x.reduce(:-)}
-    @found_key = reverse_to_key(rotators)
+    coded_tail = slice_string(secret, start, finish)
+    tail = slice_string("..end..", start, finish)
+    @found_key = find_key(coded_tail, tail, date)
     @decrypt.run(secret, @found_key, date)
   end
 
@@ -37,6 +34,17 @@ class Crack
   end
 
   private
+  def find_key(coded_tail, tail, date)
+    shift = discover_shift(coded_tail, tail)
+    offset = @offset.get_offset(date)
+    rotators = [shift,offset].transpose.map {|x| x.reduce(:-)}
+    reverse_to_key(rotators)
+  end
+
+  def slice_string(string, start, finish)
+    string[start..finish].split("")
+  end
+
   def find_end_adjustment(secret)
     place = secret.length % 4
     start = -4 - place
@@ -48,6 +56,19 @@ class Crack
     key = rotators.map {|number| number.to_s[0]}
     key << rotators.last.to_s[1]
     key.join("")
+  end
+
+  def discover_shift(coded_tail, tail)
+    coded_tail.map.with_index do |code, idx|
+      coded_index = @encryptor.alpha.index(code)
+      rotated = @encryptor.alpha.rotate(coded_index)
+      counter = 0
+      until rotated[0] == tail[idx]
+        rotated = rotated.rotate(-1)
+        counter += 1
+      end
+      counter
+    end
   end
 
 

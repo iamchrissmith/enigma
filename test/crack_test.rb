@@ -14,6 +14,20 @@ class CrackTest < MiniTest::Test
     assert_instance_of Crack, e
   end
 
+  # def test_if_discovers_shift_easy
+  #   expected = [1, 2, 3, 4]
+  #   output = @e.discover_shift(["b", "d", "f", "h"],["a","b","c","d"])
+  #
+  #   assert_equal expected, output
+  # end
+  #
+  # def test_if_discovers_shift_spicy
+  #   expected = [19,23,42,54]
+  #   output = @e.discover_shift(["x","!","[","r"],["e","n","d","."])
+  #
+  #   assert_equal expected, output
+  # end
+
   # def test_adjust_end_for_shift_returns_right_negative_number
   #   output = e.adjust_end_for_shift("v4AD@Rfrx![rI")
   #   assert_equal ["x", "!", "[", "r"], output
