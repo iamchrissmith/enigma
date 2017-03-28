@@ -72,6 +72,6 @@ class Crack
 end
 
 if !ARGV.empty?
-  Crack.new(ARGV)
-  crack.file_crack(ARGV)
+  Crack.new
+  print crack.file_crack(ARGV)
 end

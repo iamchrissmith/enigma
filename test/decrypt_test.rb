@@ -36,7 +36,6 @@ class DecryptTest < MiniTest::Test
   end
 
   def test_decrypt_writes_decoded_message_to_file
-    # skip
     within_construct do |construct|
       construct.directory 'test/mock_files' do |dir|
         dir.file 'encrypted.txt', "v4AD@Rfrx![rI"
@@ -49,7 +48,6 @@ class DecryptTest < MiniTest::Test
   end
 
   def test_decrypt_writes_decoded_message_to_file_when_message_has_line_breaks
-    # skip
     within_construct do |construct|
       construct.directory 'test/mock_files' do |dir|
         dir.file 'encrypted.txt', "v4AD@Rfrx![rI\n\n"
@@ -59,6 +57,14 @@ class DecryptTest < MiniTest::Test
         assert_equal "Created 'message.txt' with the key 12345 and date 230217", message
       end
     end
+  end
+
+  def test_decrypt_writes_decoded_message_to_file_from_command_line
+    skip
+    File.write('./test/test_files/decrypt_test_encrypted_message.txt', "v4AD@Rfrx![rI")
+    message = `ruby ./lib/decrypt.rb ./test/test_files/decrypt_test_encrypted_message.txt ./test/test_files/decrypt_test_decoded_message.txt "12345" "230217"`
+    assert_equal "chris ..end..", File.read('./test/test_files/decrypt_test_decoded_message.txt')
+    assert_equal "Created './test/test_files/decrypt_test_decoded_message.txt' with the key 12345 and date 230217", message
   end
 
 end

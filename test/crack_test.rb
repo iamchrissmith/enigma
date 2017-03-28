@@ -47,6 +47,14 @@ class CrackTest < MiniTest::Test
     end
   end
 
+  def test_crack_writes_decoded_message_to_file_from_command_line
+    skip
+    File.write('./test/test_files/crack_test_encrypted_message.txt', "v4AD@Rfrx![rI")
+    message = `ruby ./lib/decrypt.rb ./test/test_files/crack_test_encrypted_message.txt ./test/test_files/crack_test_decoded_message.txt "12345" "230217"`
+    assert_equal "chris ..end..", File.read('./test/test_files/crack_test_decoded_message.txt')
+    assert_equal "Created './test/test_files/crack_test_decoded_message.txt' with the key 12345 and date 230217", message
+  end
+
   # COMMENTING OUT PRIVATE FUNCTION TESTS
     # def test_if_discovers_shift_easy
     #   expected = [1, 2, 3, 4]

@@ -24,5 +24,5 @@ end
 
 if !ARGV.empty?
   encrypt = Encrypt.new
-  encrypt.file_encrypt(ARGV)
+  print encrypt.file_encrypt(ARGV)
 end
