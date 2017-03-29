@@ -23,14 +23,8 @@ class OffsetCalculatorTest < MiniTest::Test
   end
 
   def test_assign_rotators
-    expected = ["12","23","34","45"]
-    assert_equal expected, offset.assign_rotators("12345")
-  end
-
-  def test_rotators_to_nums
-    rotators = ["12","23","34","45"]
     expected = [12,23,34,45]
-    assert_equal expected, offset.rotators_to_nums(rotators)
+    assert_equal expected, offset.assign_rotators("12345")
   end
 
   def test_shift_sums_rotators_and_offset
