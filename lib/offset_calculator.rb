@@ -1,7 +1,6 @@
 require 'pry'
 
 class OffsetCalculator
-
   def get_offset(date)
     today = date.strftime("%d%m%y")
     today = today.to_i ** 2
@@ -16,7 +15,7 @@ class OffsetCalculator
     (1..4).each do |idx|
       rotators << keys[idx-1] + keys[idx]
     end
-    rotators
+    rotators #would it be better to call rotators_to_nums here instead of inside shift (30)
   end
 
   def rotators_to_nums(rotators)
@@ -25,11 +24,10 @@ class OffsetCalculator
     end
   end
 
-  def shift(key, date = Date.today)
+  def shift(key, date)
     shifted = []
     rotators = rotators_to_nums( assign_rotators(key) )
     offset = get_offset(date)
     shifted = [rotators,offset].transpose.map {|x| x.reduce(:+)}
   end
-
 end

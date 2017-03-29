@@ -19,10 +19,9 @@ class Encrypt
   def file_encrypt(args)
     file_change(args)
   end
-
 end
 
-if !ARGV.empty?
+unless ARGV.empty?
   encrypt = Encrypt.new
   print encrypt.file_encrypt(ARGV)
 end
