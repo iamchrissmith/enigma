@@ -8,13 +8,13 @@ require './lib/crack'
 class Enigma
 
   def encrypt(message, key = KeyGenerator.new.generate, date = Date.today)
-      encrypt = Encrypt.new()
-      encrypt.run(message, key, date)
+    encrypt = Encrypt.new()
+    encrypt.run(message, key, date)
   end
 
   def decrypt(secret, key = KeyGenerator.new.generate, date = Date.today)
-      decrypt = Decrypt.new()
-      decrypt.run(secret, key, date)
+    decrypt = Decrypt.new()
+    decrypt.run(secret, key, date)
   end
 
   def crack(secret, date = Date.today)
