@@ -1,23 +1,28 @@
 require 'pry'
 require './lib/key_generator'
-require './lib/enigma'
+require './lib/offset_calculator'
+require './lib/encryptor'
 
 class Encrypt
-  
-  def initialize(args)
-    @enigma = Enigma.new
-    @args = args
-    file_encrypt
+  include Encryptor
+
+  def initialize
+    @offset = OffsetCalculator.new
   end
 
-  def file_encrypt
-    key = KeyGenerator.new.generate
-    message = File.read(@args[0])
-    secret = @enigma.encrypt(message, key)
-    File.write(@args[1], secret)
-    date = Date.today.strftime("%d%m%y")
-    puts "Created #{@args[1]} with the key #{key} and date #{date}"
+  def run(message, key, date)
+    shift = @offset.shift(key, date)
+    letters = message.split('')
+    rotate_letters(letters, shift).join('')
   end
+
+  def file_encrypt(args)
+    file_change(args)
+  end
+
 end
 
-Encrypt.new(ARGV)
+if !ARGV.empty?
+  encrypt = Encrypt.new
+  print encrypt.file_encrypt(ARGV)
+end

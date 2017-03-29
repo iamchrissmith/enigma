@@ -3,13 +3,10 @@ require './lib/offset_calculator'
 
 class OffsetCalculatorTest < MiniTest::Test
 
-  attr_reader :offset,
-              :offset_date
+  attr_reader :offset
 
   def setup
     @offset = OffsetCalculator.new
-    # @offset = OffsetCalculator.new("12345")
-    # @offset_date = OffsetCalculator.new("12345", Date.new(2017,2,23))
   end
 
   def test_offset_exists

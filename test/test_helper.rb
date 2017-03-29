@@ -5,3 +5,4 @@ SimpleCov.start
 # Minitest::Reporters.use!(Minitest::Reporters::SpecReporter.new)
 require 'minitest/autorun'
 require 'minitest/emoji'
+require 'construct'

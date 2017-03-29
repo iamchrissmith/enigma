@@ -1,2 +1,3 @@
 notes/*
 coverage
+test/test_files/*.txt

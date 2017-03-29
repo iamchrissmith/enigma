@@ -2,14 +2,6 @@ require 'pry'
 
 class OffsetCalculator
 
-  # attr_reader :key
-  # attr_accessor :date
-
-  # def initialize
-  #   # @key  = key
-  #   # @date = date
-  # end
-
   def get_offset(date)
     today = date.strftime("%d%m%y")
     today = today.to_i ** 2
