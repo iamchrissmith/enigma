@@ -22,7 +22,7 @@ class Crack
   end
 
   def file_crack(args)
-    args = args.insert(2,'') #putting in fake key to normalize args
+    args = args.insert(2, '') # putting in fake key to normalize args
     file_args = parse_file_args(args)
     secret = get_file_message(file_args[:input])
     message = run(secret, file_args[:date])
@@ -31,15 +31,16 @@ class Crack
   end
 
   private
+
   def find_key(coded_tail, tail, date)
     shift = discover_shift(coded_tail, tail)
     offset = @offset.get_offset(date)
-    rotators = [shift,offset].transpose.map {|x| x.reduce(:-)}
+    rotators = [shift, offset].transpose.map { |x| x.reduce(:-) }
     reverse_to_key(rotators)
   end
 
   def slice_string_to_array(string, start, finish)
-    string[start..finish].split("")
+    string[start..finish].split('')
   end
 
   def find_end_adjustment(secret)
@@ -50,9 +51,9 @@ class Crack
   end
 
   def reverse_to_key(rotators)
-    key = rotators.map {|number| number.to_s[0]}
+    key = rotators.map { |number| number.to_s[0] }
     key << rotators.last.to_s[1]
-    key.join("")
+    key.join('')
   end
 
   def discover_shift(coded_tail, tail)

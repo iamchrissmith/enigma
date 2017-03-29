@@ -10,12 +10,12 @@ module Encryptor
   end
 
   def numbers
-    ("0".."9").to_a
+    ('0'..'9').to_a
   end
 
   def symbols
     symbols = %w(! @ $ % ^ & * ( ) [ ] , . < > ; :)
-    symbols << [" ", "\"", "/", "?", "|", "#"]
+    symbols << [' ', "\"", '/', '?', '|', '#']
     symbols.flatten
   end
 
@@ -23,12 +23,12 @@ module Encryptor
 
   def rotate_letters(letters, shift)
     letters.map do |letter|
-        index = ALPHA.index(letter)
-        this_shift = shift[0]
-        rotated = ALPHA.rotate( this_shift )
-        shift.rotate!
-        rotated[index]
-      end
+      index = ALPHA.index(letter)
+      this_shift = shift[0]
+      rotated = ALPHA.rotate(this_shift)
+      shift.rotate!
+      rotated[index]
+    end
   end
 
   def file_change(args)
@@ -51,13 +51,13 @@ module Encryptor
   def parse_date(text)
     day = text[0..1].to_i
     month = text[2..3].to_i
-    year = ("20" + text[4..5]).to_i
-    Date.new(year,month,day)
+    year = ('20' + text[4..5]).to_i
+    Date.new(year, month, day)
   end
 
   def get_file_message(input_file)
     message = File.read(input_file)
-    message.gsub!("\n", '') if message.include?("\n")
+    message.delete!("\n") if message.include?("\n")
     message
   end
 
@@ -66,7 +66,7 @@ module Encryptor
   end
 
   def success_message(output_file, key, date)
-    date = date.strftime("%d%m%y")
+    date = date.strftime('%d%m%y')
     "Created '#{output_file}' with the key #{key} and date #{date}"
   end
 end

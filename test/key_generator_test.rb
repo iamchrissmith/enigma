@@ -30,7 +30,7 @@ class KeyGeneratorTest < MiniTest::Test
   end
 
   def test_get_random_is_string
-    x = key.get_random
+    x = key.random_number_as_string
     assert_instance_of String, x
   end
 

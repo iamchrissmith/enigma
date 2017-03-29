@@ -24,7 +24,7 @@ class Decrypt
 
   def negative_shift(shift)
     # shift.map {|number| -number}
-    shift.map( &:-@ )
+    shift.map(&:-@)
   end
 end
 
