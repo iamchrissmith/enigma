@@ -23,12 +23,12 @@ class Decrypt
   private
 
   def negative_shift(shift)
-    shift = shift.map {|number| -number}
+    # shift.map {|number| -number}
+    shift.map( &:-@ )
   end
-
 end
 
-if !ARGV.empty?
+unless ARGV.empty?
   decrypt = Decrypt.new
   print decrypt.file_decrypt(ARGV)
 end

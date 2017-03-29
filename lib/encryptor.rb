@@ -33,12 +33,11 @@ module Encryptor
 
   def file_change(args)
     file_args = parse_file_args(args)
-    secret = get_file_message(file_args[:input])
-    message = run(secret, file_args[:key], file_args[:date])
-    write_file(file_args[:output], message)
+    input_message = get_file_message(file_args[:input])
+    output_message = run(input_message, file_args[:key], file_args[:date])
+    write_file(file_args[:output], output_message)
     success_message(file_args[:output], file_args[:key], file_args[:date])
   end
-
 
   def parse_file_args(args)
     args = {

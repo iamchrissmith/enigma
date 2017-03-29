@@ -15,8 +15,8 @@ class Crack
 
   def run(secret, date)
     start, finish = find_end_adjustment(secret)
-    coded_tail = slice_string(secret, start, finish)
-    tail = slice_string("..end..", start, finish)
+    coded_tail = slice_string_to_array(secret, start, finish)
+    tail = slice_string_to_array('..end..', start, finish)
     @found_key = find_key(coded_tail, tail, date)
     @decrypt.run(secret, @found_key, date)
   end
@@ -38,7 +38,7 @@ class Crack
     reverse_to_key(rotators)
   end
 
-  def slice_string(string, start, finish)
+  def slice_string_to_array(string, start, finish)
     string[start..finish].split("")
   end
 
@@ -67,11 +67,9 @@ class Crack
       counter
     end
   end
-
-
 end
 
-if !ARGV.empty?
+unless ARGV.empty?
   Crack.new
   print crack.file_crack(ARGV)
 end
