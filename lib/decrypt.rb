@@ -28,7 +28,7 @@ class Decrypt
   end
 end
 
-unless ARGV.empty?
-  decrypt = Decrypt.new
-  print decrypt.file_decrypt(ARGV)
+if __FILE__ == $0 && ARGV
+    decrypt = Decrypt.new
+    print decrypt.file_decrypt(ARGV)
 end

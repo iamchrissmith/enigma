@@ -44,11 +44,13 @@ module Encryptor
       input: args[0],
       output: args[1],
       key: args[2] || KeyGenerator.new.generate,
-      date: parse_date(args[3]) || Date.today
+      date: parse_date(args[3])
     }
   end
 
   def parse_date(text)
+    return Date.today if text.nil?
+
     day = text[0..1].to_i
     month = text[2..3].to_i
     year = ('20' + text[4..5]).to_i

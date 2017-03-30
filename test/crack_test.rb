@@ -10,11 +10,13 @@ class CrackTest < MiniTest::Test
   end
 
   def test_crack_exists
+    # skip
     assert e
     assert_instance_of Crack, e
   end
 
   def test_cracker_returns_names
+    # skip
     natalia = e.run("6xC\"45*wIM]IwMf",Date.new(2017,2,23))
     n_output = "natalia ..end.."
     assert_equal n_output, natalia
@@ -24,6 +26,7 @@ class CrackTest < MiniTest::Test
   end
 
   def test_crack_writes_decoded_message_to_file
+    # skip
     within_construct do |construct|
       construct.directory 'test/mock_files' do |dir|
         dir.file 'encrypted.txt', "v4AD@Rfrx![rI"
@@ -36,6 +39,7 @@ class CrackTest < MiniTest::Test
   end
 
   def test_crack_writes_decoded_message_to_file_when_message_has_line_breaks
+    # skip
     within_construct do |construct|
       construct.directory 'test/mock_files' do |dir|
         dir.file 'encrypted.txt', "v4AD@Rfrx![rI\n\n"
@@ -50,10 +54,37 @@ class CrackTest < MiniTest::Test
   def test_crack_writes_decoded_message_to_file_from_command_line
     skip
     File.write('./test/test_files/crack_test_encrypted_message.txt', "v4AD@Rfrx![rI")
-    message = `ruby ./lib/decrypt.rb ./test/test_files/crack_test_encrypted_message.txt ./test/test_files/crack_test_decoded_message.txt "12345" "230217"`
+    message = `ruby ./lib/crack.rb ./test/test_files/crack_test_encrypted_message.txt ./test/test_files/crack_test_decoded_message.txt 230217`
     assert_equal "chris ..end..", File.read('./test/test_files/crack_test_decoded_message.txt')
     assert_equal "Created './test/test_files/crack_test_decoded_message.txt' with the key 12345 and date 230217", message
   end
+
+  # def test_bulk_crack_test
+  #   1.times do |n|
+  #     File.write('./test/test_files/encrypt_test_message.txt', "#{n}: chris ..end..")
+  #     encrypt_message = `ruby ./lib/encrypt.rb ./test/test_files/encrypt_test_message.txt ./test/test_files/encrypt_test_encrypted.txt 77777 300317`
+  #     puts encrypt_message
+  #     message = `ruby ./lib/crack.rb ./test/test_files/encrypt_test_encrypted.txt ./test/test_files/crack_test_decoded_message.txt 300317`
+  #     puts message
+  #     assert_equal "#{n}: chris ..end..", File.read('./test/test_files/crack_test_decoded_message.txt')
+  #   end
+  #   1.times do |n|
+  #     File.write('./test/test_files/encrypt_test_message.txt', "#{n}: chris ..end..")
+  #     encrypt_message = `ruby ./lib/encrypt.rb ./test/test_files/encrypt_test_message.txt ./test/test_files/encrypt_test_encrypted.txt 99999 300317`
+  #     puts encrypt_message
+  #     message = `ruby ./lib/crack.rb ./test/test_files/encrypt_test_encrypted.txt ./test/test_files/crack_test_decoded_message.txt 300317`
+  #     puts message
+  #     assert_equal "#{n}: chris ..end..", File.read('./test/test_files/crack_test_decoded_message.txt')
+  #   end
+  #   1.times do |n|
+  #     File.write('./test/test_files/encrypt_test_message.txt', "#{n}: chris ..end..")
+  #     encrypt_message = `ruby ./lib/encrypt.rb ./test/test_files/encrypt_test_message.txt ./test/test_files/encrypt_test_encrypted.txt 111111 300317`
+  #     puts encrypt_message
+  #     message = `ruby ./lib/crack.rb ./test/test_files/encrypt_test_encrypted.txt ./test/test_files/crack_test_decoded_message.txt 300317`
+  #     puts message
+  #     assert_equal "#{n}: chris ..end..", File.read('./test/test_files/crack_test_decoded_message.txt')
+  #   end
+  # end
 
   # COMMENTING OUT PRIVATE FUNCTION TESTS
     # def test_if_discovers_shift_easy
