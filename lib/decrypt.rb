@@ -10,7 +10,7 @@ class Decrypt
     @offset = OffsetCalculator.new
   end
 
-  def run(secret, key, date, shift = '')
+  def run(secret, key, date, shift = nil)
     shift = @offset.shift(key, date) if !shift
     shift = negative_shift(shift)
     letters = secret.split('')
